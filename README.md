@@ -298,8 +298,3 @@ terraform apply -var-file="terraform.tfvars"
 > ⚠️ Sensitive values (`subscription_id`, `tenant_id`, `tenant_root_group_id`) are in `terraform.tfvars`. In a real pipeline, these would be injected as environment variables or pulled from a secrets manager — never committed to source control.
 
 ---
-
-## Author
-
-**HK** — Cloud / DevOps / Platform Engineering  
-Built to demonstrate production-grade Azure infrastructure design using Terraform.
