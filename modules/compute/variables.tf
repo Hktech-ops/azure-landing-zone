@@ -13,13 +13,13 @@ variable "rg_location" {
 
 # VM NIC variables
 variable "win_vm_nic_name" {
-  type = string
+  type    = string
   default = "win-vm-nic"
 }
 
 # VM variables
 variable "win_vm_name" {
-  type = string
+  type    = string
   default = "win-vm"
 }
 
@@ -34,11 +34,11 @@ variable "storage_account_uri" {
 
 # VM (resource) diagnostic setting
 variable "win_vm_diagnostic_setting_name" {
-  type = string
+  type    = string
   default = "win-vm-diagnostic-setting"
 }
 # from module: monitoring
-variable "law_id" {  
+variable "law_id" {
 }
 
 # =================================
@@ -49,6 +49,6 @@ variable "cnsolns_recovery_services_vault_name" {
 }
 
 variable "backup_policy_vm_name" {
-    type = string
-    default = "vms-backup-policy"
+  type    = string
+  default = "vms-backup-policy"
 }

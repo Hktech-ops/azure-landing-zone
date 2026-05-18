@@ -29,19 +29,19 @@ def id - /providers/Microsoft.Authorization/policyDefinitions/bef3f64c-5290-43b7
 # ===========================
 
 resource "azurerm_policy_set_definition" "platform_guidelines_policy_set" {
-  name = var.platform_guidelines_policy_set_name
+  name         = var.platform_guidelines_policy_set_name
   display_name = var.platform_guidelines_policy_set_displayname
-  policy_type = "Custom"
+  policy_type  = "Custom"
 
-  management_group_id = var.workloads_corp_mg_id    //referenced to corp management group
+  management_group_id = var.workloads_corp_mg_id //referenced to corp management group
 
   //for allowed locations policy
   parameters = jsonencode({
     listOfAllowedLocations = {
-        type = "Array"
-        metadata = {
-            description = "Allowed Azure regions/locations for deployment"
-        }
+      type = "Array"
+      metadata = {
+        description = "Allowed Azure regions/locations for deployment"
+      }
     }
   })
 
@@ -49,45 +49,45 @@ resource "azurerm_policy_set_definition" "platform_guidelines_policy_set" {
   policy_definition_reference {
     policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c"
     parameter_values = jsonencode({
-        listOfAllowedLocations = {
-            value = "[parameters('listOfAllowedLocations')]"
-        }
+      listOfAllowedLocations = {
+        value = "[parameters('listOfAllowedLocations')]"
+      }
     })
- }
+  }
 
- ## Require author tag
- policy_definition_reference {
-   policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/871b6d14-10aa-478d-b590-94f262ecfa99"
+  ## Require author tag
+  policy_definition_reference {
+    policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/871b6d14-10aa-478d-b590-94f262ecfa99"
 
-   parameter_values = jsonencode({
-    tagName = {
+    parameter_values = jsonencode({
+      tagName = {
         value = "author"
-    }
-   })
- }
- ## Require env tag
- policy_definition_reference {
-   policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/871b6d14-10aa-478d-b590-94f262ecfa99"
+      }
+    })
+  }
+  ## Require env tag
+  policy_definition_reference {
+    policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/871b6d14-10aa-478d-b590-94f262ecfa99"
 
-   parameter_values = jsonencode({
-    tagName = {
+    parameter_values = jsonencode({
+      tagName = {
         value = "env"
-    }
-   })
- }
+      }
+    })
+  }
 }
 
 # Assigned platform guideleines policy initiative to corp management group
 resource "azurerm_management_group_policy_assignment" "platform_guidelines_to_corp_mg_assignment" {
-  name = var.platform_guidelines_to_corp_mg_assignment
-  display_name = var.platform_guidelines_to_corp_mg_assignment_displayname
+  name                 = var.platform_guidelines_to_corp_mg_assignment
+  display_name         = var.platform_guidelines_to_corp_mg_assignment_displayname
   policy_definition_id = azurerm_policy_set_definition.platform_guidelines_policy_set.id
-  management_group_id = var.workloads_corp_mg_id  //assigned to corp management group
+  management_group_id  = var.workloads_corp_mg_id //assigned to corp management group
 
   // allowed locations - has to be either of the two specified
   parameters = jsonencode({
     listOfAllowedLocations = {
-        value = ["canadacentral", "canadaeast"]
+      value = ["canadacentral", "canadaeast"]
     }
   }) //allowed locations is an array
 
@@ -109,17 +109,17 @@ resource "azurerm_management_group_policy_assignment" "platform_guidelines_to_co
 # ===========================
 
 resource "azurerm_policy_set_definition" "monitoring_policy_set" {
-  name = var.monitoring_policy_set_name
+  name         = var.monitoring_policy_set_name
   display_name = var.monitoring_policy_set_displayname
-  policy_type = "Custom"
-  
-  management_group_id = var.workloads_corp_mg_id    //referenced corp management group
+  policy_type  = "Custom"
+
+  management_group_id = var.workloads_corp_mg_id //referenced corp management group
 
   policy_definition_reference {
     policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/bef3f64c-5290-43b7-85b0-9b254eef4c47"
 
     parameter_values = jsonencode({
-      
+
       effect = {
         value = "DeployIfNotExists"
       }
@@ -138,10 +138,10 @@ resource "azurerm_policy_set_definition" "monitoring_policy_set" {
 
 # Assign monitoring policy initiative to corp MG
 resource "azurerm_management_group_policy_assignment" "monitoring_to_corp_mg_assignment" {
-  name = var.monitoring_to_corp_mg_assignment
-  display_name = var.monitoring_to_corp_mg_assignment_displayname
+  name                 = var.monitoring_to_corp_mg_assignment
+  display_name         = var.monitoring_to_corp_mg_assignment_displayname
   policy_definition_id = azurerm_policy_set_definition.monitoring_policy_set.id
-  management_group_id = var.workloads_corp_mg_id
+  management_group_id  = var.workloads_corp_mg_id
 
   // policy set assignment id
   ## id is needed to assign RBAC roles to this policy set assignment
@@ -165,12 +165,12 @@ BEST to ** explicitly assign those RBAC roles to policy assignment!!
 
 # RBAC roles to MG policy assignment
 resource "azurerm_role_assignment" "monitoring_contributor_role_to_monitoring" {
-  scope = var.subscription_id
+  scope                = var.subscription_id
   role_definition_name = "Monitoring Contributor"
-  principal_id = azurerm_management_group_policy_assignment.monitoring_to_corp_mg_assignment.identity[0].principal_id
+  principal_id         = azurerm_management_group_policy_assignment.monitoring_to_corp_mg_assignment.identity[0].principal_id
 }
 resource "azurerm_role_assignment" "log_analytics_contributor_role_to_monitoring" {
-  scope = var.subscription_id
+  scope                = var.subscription_id
   role_definition_name = "Log Analytics Contributor"
-  principal_id = azurerm_management_group_policy_assignment.monitoring_to_corp_mg_assignment.identity[0].principal_id
+  principal_id         = azurerm_management_group_policy_assignment.monitoring_to_corp_mg_assignment.identity[0].principal_id
 }

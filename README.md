@@ -89,3 +89,13 @@ How it works:
 
 ---
 
+
+## Cost analysis
+
+![alt text](costanalysis_charts.png)
+
+
+---
+
+## 
+

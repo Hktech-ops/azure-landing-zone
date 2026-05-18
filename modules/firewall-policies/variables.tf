@@ -25,24 +25,24 @@ variable "win_vm_private_ip" {
 
 # Firewall policy variables
 variable "hub_firewall_policy_name" {
-  type = string
+  type    = string
   default = "hub-firewall-policy"
 }
 
 # Dnat rule collection group name
 variable "dnat_rules_cg_name" {
-  type = string
+  type    = string
   default = "dnat-rules-cg"
 }
 
 # Network rules collection group name
 variable "network_rules_cg_name" {
-  type = string
+  type    = string
   default = "network-rules-cg"
 }
 
 # Application rules collection group nmae
 variable "app_rules_cg_name" {
-  type = string
+  type    = string
   default = "application-rules-cg"
 }

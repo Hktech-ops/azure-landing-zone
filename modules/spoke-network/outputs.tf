@@ -61,7 +61,7 @@ output "app_nsg_id" {
 }
 output "database_nsg_id" {
   description = "ID of the Database NSG"
-  value = azurerm_network_security_group.database_nsg.id
+  value       = azurerm_network_security_group.database_nsg.id
 }
 output "workload_nsg_id" {
   description = "ID of the Workload NSG"

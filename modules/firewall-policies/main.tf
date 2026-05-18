@@ -21,7 +21,7 @@ firewall policy rules collection groups : 3
 locals {
   common_tags = {
     author = "HK"
-    env = "Prod"
+    env    = "Prod"
   }
 }
 
@@ -31,8 +31,8 @@ locals {
 # Firewall policy
 resource "azurerm_firewall_policy" "hub_firewall_policy" {
   resource_group_name = var.rg_name
-  location = var.rg_location
-  name = var.hub_firewall_policy_name
+  location            = var.rg_location
+  name                = var.hub_firewall_policy_name
 
   sku = "Standard"
 
@@ -56,16 +56,16 @@ resource "azurerm_firewall_policy_rule_collection_group" "dnat_rules_cg" {
     action   = "Dnat"
 
     rule {
-      name                = "http-to-appvm"
-      protocols           = ["TCP"]
-      source_addresses    = ["*"]
-      destination_ports   = ["80"]
+      name              = "http-to-appvm"
+      protocols         = ["TCP"]
+      source_addresses  = ["*"]
+      destination_ports = ["80"]
 
       destination_address = var.hub_firewall_public_ip_address
 
-      translated_address  = var.win_vm_private_ip //vm's private IP
-      translated_port     = "80"
-}
+      translated_address = var.win_vm_private_ip //vm's private IP
+      translated_port    = "80"
+    }
 
     rule {
       name                = "https-to-appvm"
@@ -96,7 +96,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "network_rules_cg" {
     rule {
       name                  = "allow-all-outbound"
       protocols             = ["Any"]
-      source_addresses      = [var.app_subnet_cidr]   //[ var.hub_firewall_private_ip_address ] //private IP of firewall
+      source_addresses      = [var.app_subnet_cidr] //[ var.hub_firewall_private_ip_address ] //private IP of firewall
       destination_addresses = ["*"]
       destination_ports     = ["*"]
     }
@@ -119,7 +119,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "app_rules_cg" {
 
     rule {
       name             = "allow-http-https"
-      source_addresses = [var.app_subnet_cidr]   //[var.hub_firewall_private_ip_address]  // private IP of firewall
+      source_addresses = [var.app_subnet_cidr] //[var.hub_firewall_private_ip_address]  // private IP of firewall
 
       protocols {
         type = "Http"
