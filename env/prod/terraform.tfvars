@@ -1,5 +1,7 @@
 // terraform.tfvars for env: prod
 
+## In a real-world scenario, I would refrain from adding ids in tf.vars --> when pushing to git hub!
+
 
 /* 
 tenant_root_group_id --> CLI = az accout management-goup list
