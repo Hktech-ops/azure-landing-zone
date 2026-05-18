@@ -31,10 +31,6 @@ This project provisions a **fully private, production-style Azure Landing Zone**
 
 ![Traffic Flow](traffic-flow.png)
 
-### Diagram 3 — Terraform Module Map
-
-![alt text](repo-layout.png)
-
 ---
 
 ## Network Design
