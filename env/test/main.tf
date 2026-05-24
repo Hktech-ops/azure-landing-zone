@@ -1,6 +1,6 @@
 # main.tf for env: test
 
-# trigger2
+# my trigger
 
 
 module "platform" {
