@@ -27,7 +27,7 @@ jobs:
   runs-on: ubuntu-latest
   defaults:
    run:
-    working-directory: azure-landing-zone/env/test
+    working-directory: env/test
   
   steps:
    - name: Checkout
