@@ -1,6 +1,6 @@
 # main.tf for env: test
 
-# trigger pipeline
+# trigger2
 
 
 module "platform" {

@@ -45,7 +45,7 @@ resource "azuread_service_principal" "github_sp" {
 resource "azuread_application_federated_identity_credential" "github-oidc" {
   application_id = azuread_application.github.id // id of the entra app provisioned earlier
   display_name   = "${var.azuread_app_github}-oidc"
-  subject        = "repo:Hktech-ops/azure-landing-zone:ref:refs/heads/main"
+  subject        = "repo:Hktech-ops/azure-landing-zone:ref:refs/heads/env-test"
   audiences      = ["api://AzureADTokenExchange"]
   issuer         = "https://token.actions.githubusercontent.com"
 }
