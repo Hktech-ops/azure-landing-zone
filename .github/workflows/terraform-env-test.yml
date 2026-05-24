@@ -9,8 +9,8 @@ on:
   branches:
    - env-test
   paths:
-   - "azure-landing-zone/env/test/**"
-   - "azure-landing-zone/modules/**"
+   - "env/test/**"
+   - "modules/**"
 
 permissions:
  id-token: write
