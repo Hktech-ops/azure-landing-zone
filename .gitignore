@@ -1,4 +1,4 @@
-env/*/providers.tf
+# env/*/providers.tf
 **/.terraform/
 **/.terraform.lock.hcl
 **/.tfstate
