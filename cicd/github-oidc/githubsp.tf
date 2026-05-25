@@ -9,7 +9,11 @@ Goal is to create
 */
 # RBAC roles for service principal
 /* 
-Why these 3 RBAC roles to SP?
+Why these 4 RBAC roles to SP? 3 
+** 3 Control Plane roles at subscription level - Contributor, Resource Policy Contributor, User Access Administrator
+** 1 Data Plane role - Storage Blob Data Contributor at scope Storage Account - for accessing remote backend
+    Why? SP needs to access storage account for writing remote backend file
+    
  - Each role covers specific capability that Terraform needs
  - Contributor
   - Covers 95% of terraform operations such as create, update, delete, deploy resources etc...
@@ -55,18 +59,26 @@ resource "azuread_application_federated_identity_credential" "github-oidc" {
 # Contributor RBAC role to sp
 resource "azurerm_role_assignment" "contributor_to_github_sp" {
   scope                = "/subscriptions/${var.subscription_id}"
-  principal_id         = azuread_service_principal.github_sp.object_id  //object id of github SP
+  principal_id         = azuread_service_principal.github_sp.object_id //object id of github SP
   role_definition_name = "Contributor"
 }
 # Resource Policy Contributor RBAC role to sp
 resource "azurerm_role_assignment" "resource_policy_contributor_to_github_sp" {
   scope                = "/subscriptions/${var.subscription_id}"
-  principal_id         = azuread_service_principal.github_sp.object_id  //object id of github SP
+  principal_id         = azuread_service_principal.github_sp.object_id //object id of github SP
   role_definition_name = "Resource Policy Contributor"
 }
 # User Access Administrator RBAC role to sp
 resource "azurerm_role_assignment" "user_acces_admin_to_github_sp" {
   scope                = "/subscriptions/${var.subscription_id}"
-  principal_id         = azuread_service_principal.github_sp.object_id  //object id of github SP
+  principal_id         = azuread_service_principal.github_sp.object_id //object id of github SP
   role_definition_name = "User Access Administrator"
+}
+
+# Storage Blob Data Contributor RBAC role to sp at Storage A/C level
+resource "azurerm_role_assignment" "storage_blob_data_contributor_to_github_sp" {
+  // id of remote backeend storage account (CLI - az storage account show --rgname --name --query id)
+  scope                = "/subscriptions/1c1bf735-bff4-43f7-b6ed-9bfbb87f4840/resourceGroups/bluepeak-alz-remote-backend/providers/Microsoft.Storage/storageAccounts/bluepeakrbestorage"
+  principal_id         = azuread_service_principal.github_sp.object_id //object id of github SP
+  role_definition_name = "Storage Blob Data Contributor"
 }

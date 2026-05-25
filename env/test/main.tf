@@ -1,7 +1,6 @@
 # main.tf for env: test
 
-# my trigger2
-
+# test comment
 
 module "platform" {
   source = "../../modules/platform"
