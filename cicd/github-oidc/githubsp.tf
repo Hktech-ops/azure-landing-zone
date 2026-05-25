@@ -13,7 +13,7 @@ Why these 4 RBAC roles to SP? 3
 ** 3 Control Plane roles at subscription level - Contributor, Resource Policy Contributor, User Access Administrator
 ** 1 Data Plane role - Storage Blob Data Contributor at scope Storage Account - for accessing remote backend
     Why? SP needs to access storage account for writing remote backend file
-    
+
  - Each role covers specific capability that Terraform needs
  - Contributor
   - Covers 95% of terraform operations such as create, update, delete, deploy resources etc...
@@ -81,4 +81,11 @@ resource "azurerm_role_assignment" "storage_blob_data_contributor_to_github_sp" 
   scope                = "/subscriptions/1c1bf735-bff4-43f7-b6ed-9bfbb87f4840/resourceGroups/bluepeak-alz-remote-backend/providers/Microsoft.Storage/storageAccounts/bluepeakrbestorage"
   principal_id         = azuread_service_principal.github_sp.object_id //object id of github SP
   role_definition_name = "Storage Blob Data Contributor"
+}
+
+
+resource "azurerm_role_assignment" "blob_data_contributor_container_to_gitub_sp" {
+  scope                = "/subscriptions/${var.subscription_id}/resourceGroups/bluepeak-alz-remote-backend/providers/Microsoft.Storage/storageAccounts/bluepeakrbestorage/blobServices/default/containers/bluepeak-alz-tfstate"
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = azuread_service_principal.github_sp.object_id
 }
