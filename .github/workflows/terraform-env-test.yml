@@ -22,6 +22,9 @@ env:
  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
  ARM_SKIP_PROVIDER_REGISTRATION: true
  ARM_USE_OIDC: true
+ ARM_USE_AZUREAD: false
+ ARM_USE_MSI: false
+ ARM_USE_AZCLI: false
 
 jobs:
  terraform-test:
