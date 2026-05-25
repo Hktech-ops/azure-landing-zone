@@ -10,6 +10,6 @@ tenant id --> CLI = az account show
 */
 
 tenant_root_group_id = "/providers/Microsoft.Management/managementGroups/2b4bb9a8-b0c8-415d-a87c-919dd639e8f5"
-subscription_id      = "/subscriptions/c8f4dd9e-fab4-4fc1-90c4-9f7f9c1a094f"
+subscription_id      = "/subscriptions/1c1bf735-bff4-43f7-b6ed-9bfbb87f4840"
 
 tenant_id = "2b4bb9a8-b0c8-415d-a87c-919dd639e8f5"
