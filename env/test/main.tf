@@ -1,6 +1,6 @@
 # main.tf for env: test
 
-# test comment
+# test 
 
 module "platform" {
   source = "../../modules/platform"
