@@ -10,5 +10,6 @@ terraform {
 
   // passed backend values in GitHub pipeline (terraform init section)
   backend "azurerm" {
+    use_azuread_auth = true
   }
 }
